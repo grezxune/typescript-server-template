@@ -9,14 +9,18 @@
     "scripts": {
         "build": "npx tsc -w",
         "lint": "tsc --noEmit && eslint 'src/**/*.{js,ts,tsx}' --fix",
-        "check-types": "tsc",
+        "check-types": "tsc --noEmit",
         "start": "yarn && ts-node-dev --respawn src "
     },
     "dependencies": {
-        "apollo-server": "^2.9.8",
+        "@types/jsonwebtoken": "^8.3.5",
+        "apollo-server-express": "^2.9.8",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "graphql": "^14.5.8",
         "graphql-tag": "^2.10.1",
+        "jsonwebtoken": "^8.5.1",
         "ts-node": "^8.5.0"
     },
     "devDependencies": {

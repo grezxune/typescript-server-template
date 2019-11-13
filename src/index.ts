@@ -1,35 +1,18 @@
-import { ApolloServer, gql } from 'apollo-server';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const typeDefs = gql`
-    type Book {
-        title: String!
-        author: String!
-    }
+import express from 'express';
+import cors from 'cors';
+import apolloServer from './graph';
 
-    type Query {
-        books: [Book!]!
-    }
-`;
+const app = express();
 
-const books = [
-    {
-        title: 'Harry Potter and the Chamber of Secrets',
-        author: 'J.K. Rowling',
-    },
-    {
-        title: 'Jurassic Park',
-        author: 'Michael Crichton',
-    },
-];
+app.use(cors());
+app.use('/stripeWebhook', (_, res) => res.status(200).send('New!'));
 
-const resolvers = {
-    Query: {
-        books: () => books,
-    },
-};
+apolloServer.applyMiddleware({ app });
 
-const server = new ApolloServer({ typeDefs, resolvers });
-
-server.listen().then(({ url }) => {
-    console.log(`Server ready at ${url}`);
+const port = process.env.PORT || process.env.SERVER_PORT;
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
 });
